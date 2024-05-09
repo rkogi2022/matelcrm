@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}Search Results{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row my-4">
+    <div class="row">
+        <div class="col-md-10"></div>
+        <div class="col-md-1">
+            <a href="{% url 'inventory:leasedstock' %}">
+                <span class="badge rounded-pill bg-danger" style="font-size: xx-large;">Back</span>
+            </a> 
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table bg-white">
+            <thead class="bg-info text-white">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone No</th>
+                    <th scope="col">Showroom</th>
+                    <th scope="col">Car Details</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for n in searcheddetails %}
+                <tr>
+                    <td>{{ n.person|capfirst }}</td>
+                    <td>{{ n.contact }}</td>
+                    <td>{{ n.showroom }}</td>
+                    <td>{{ n.cardetails|capfirst }}</td>
+                    <td>{{ n.leasedate }}</td>
+                    <td><a href="{% url 'inventory:updateleased' n.id %}">
+                        <span class="fa fa-edit" style="color: orange; font-size: large;"></span>
+                    </a>&nbsp;</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No results found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <div class="row my-6">
+            <div class="col-md-4 offset-md-3">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <!-- Pagination code -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

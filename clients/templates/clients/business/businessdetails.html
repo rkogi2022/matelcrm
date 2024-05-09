@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block title %}Business Page{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row my-4">
+    <div class="row" style="margin-bottom: 1rem;">
+        <div class="col-md-2">
+            <div class="row" style="margin-top:0.35em;">
+                <a href="{% url 'clients:addbusiness' %}">
+                    <button type="submit" class="btn btn-primary" >+ Business</button>
+                </a>
+            </p>
+        </div>
+        </div>
+        <div class="col-md-6">
+        </div>
+            <div class="col-md-4">
+                <form class="d-flex" action="{% url 'inventory:japanstock_searchbar' %}" method="GET">
+                    <input class="form-control me-2" name="searched" type="search" placeholder="Name/Car details.." aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                  </form>
+            </div>
+
+    </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table bg-white">
+            <thead class="bg-info text-white">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Car Details</th>
+                    <th scope="col">Car Description</th>
+                    <th scope="col">Registration No</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Invoice amount</th>
+                    <th scope="col">Proforma Invoice</th>
+                    <th scope="col">Final Invoice</th>
+                    <th scope="col">Sales Agreement</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for n in page.object_list %}
+                <tr>
+                    <td> {{ n.name.name|capfirst }} </td>
+                    <td>
+                        <p>Car: {{n.cardetails.name|capfirst}}</p>
+                        <p>Chasis No: {{ n.cardetails.chassisno|capfirst }} </p>
+                        <p>Year: {{ n.cardetails.year|capfirst }}</p>
+                        <p>Color: {{ n.cardetails.color|capfirst }} </p>
+                    </td>
+                    <td>
+                        <p>Engine: {{n.engine}}</p>
+                        <p>Fuel Type: {{n.fuel}}</p>
+                        <p>Transmission : {{n.transmission}}</p>
+                    </td>
+                    <td>{{ n.regno }}</td>
+                    <td>{{n.quantity}}</td>
+                    <td>{{ n.invamt }}</td>
+                    <td><a href="{%url 'clients:proformainvoice' n.id%}">
+                        <span class="fa fa-download"style="color: orange; font-size: large;"></span>
+                    </a>&nbsp;</td>
+                    <td><a href="{%url 'clients:finalinvoice' n.id%}">
+                        <span class="fa fa-download"style="color: orange; font-size: large;"></span>
+                    </a>&nbsp;</td>
+                    <td><a href="{%url 'clients:salesagreement' n.id%}">
+                        <span class="fa fa-download" style="color: orange; font-size: large;"></span>
+                    </a>&nbsp;</td>
+                    <td><a href="{%url 'clients:updatebusiness' n.id%}">
+                        <span class="fa fa-edit" style="color: orange; font-size: large;"></span>
+                    </a>&nbsp;</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <div class="row my-6">
+            <div class="col-md-4 offset-md-3">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item">
+                        {% if page.has_previous %}
+                        <a class="page-link" href="{% url 'inventory:japanstock' %}?page={{ page.previous_page_number }}">Previous</a>
+                      </li>
+                        {% endif %}
+                        {% for num_page in page.paginator.page_range %} <br>
+                        {% if page.number == num_page %}
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link"  href="{% url 'inventory:japanstock' %}?page={{num_page}}">{{ num_page }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item" aria-current="page">
+                            <a class="page-link"  href="{% url 'inventory:japanstock' %}?page={{num_page}}">{{ num_page }}</a>
+                        </li>
+                        {% endif %} <br>
+                        {% endfor %}
+                      <li class="page-item">
+                        {% if page.has_next %}
+                        <a class="page-link" href="{% url 'inventory:japanstock' %}?page={{ page.next_page_number }}">Next</a>
+                        {% endif %}
+                      </li>
+                    </ul>
+                  </nav>
+            </div>
+        </div>
+       </div>
+</div>
+{% endblock %}

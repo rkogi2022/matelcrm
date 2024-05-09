@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Search Results{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row my-4">
+    <div class="row">
+        <div class="row">
+            <div class="col-md-10"></div>
+        <div class="col-md-1">
+            <a href="{%url 'inventory:receiptsdetails'%}">
+                <span class="badge rounded-pill bg-danger" style="font-size: xx-large;">Back</span>
+                </a> 
+        </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table bg-white">
+            <thead class="bg-info text-white">
+                <tr>
+                    <th scope="col">Invoice No</th>
+                    <th scope="col">Invoice Amount</th>
+                    <th scope="col">Amount Paid</th>
+                    <th scope="col">Date Paid</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for receipt in searched_details %}
+                <tr>
+                    <td>{{ receipt.invoiceno }}</td>
+                    <td>{{ receipt.invoiceamt }}</td>
+                    <td>{{ receipt.amtpaid }}</td>
+                    <td>{{ receipt.datepaid }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No results found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

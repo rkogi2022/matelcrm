@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add Stock
+{% endblock %}
+
+{% block content %}
+
+<form method = 'POST' enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+       <div class="col-md-2"></div>
+       <div class="col-md-8">
+        <div class="card stockcard">
+          <center><h4>Update Details</h4></center>
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item" style="margin-bottom: 0.2px;"><b>Car Details</b> {{form.name}}</li>
+              <li class="list-group-item" style="margin-bottom: 0.2px;"><b>Chassis No</b> {{ form.chassisno }}</li>
+              <li class="list-group-item" style="margin-bottom: 0.2px;"><b>CIF(USD)</b> {{ form.cif }}</li>
+              <li class="list-group-item" style="margin-bottom: 0.2px;"><b>EXCHANGE RATE</b> {{ form.exchangerate }}</li>
+              <li class="list-group-item" style="margin-bottom: 0.2px;"><b>Payment Date</b> {{ form.paymentdate }}</li>
+            </ul>
+          <div class="row">
+            <div class="col-md-5"><a class="button button-cancel"href="{% url 'inventory:japanstock' %}">Cancel</a></div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5"><button type="submit" class="button button-add"href="{% url 'inventory:japanstock' %}">Update</button></div>
+          </div>
+        </div>
+       </div>
+       <div class="col-md-2"></div>
+    </div>
+  </form>
+
+
+{% endblock %}

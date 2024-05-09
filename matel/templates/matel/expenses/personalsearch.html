@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Search Results{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row my-4">
+    <div class="row">
+        <div class="row">
+            <div class="col-md-10"></div>
+        <div class="col-md-1">
+            <a href="{%url 'matel:personalexpenseslist'%}">
+                <span class="badge rounded-pill bg-danger" style="font-size: xx-large;">Back</span>
+                </a> 
+        </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table bg-white">
+            <thead class="bg-info text-white">
+                <tr>
+                    <th scope="col">MONTH</th>
+                    <th scope="col">HOUSE RENT</th>
+                    <th scope="col">HOME INTERNET</th>
+                    <th scope="col">MONTHLY FUEL</th>
+                    <th scope="col">CAR MAINTENANCE</th>
+                    <th scope="col">TOTAL COST</th>
+                    <th scope="col">DATE</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for n in searched_details %}
+                <tr>
+                    <td>{{ n.month|capfirst }}</td>
+                    <td>{{ n.houserent}}</td>
+                    <td>{{ n.homeinternet }}</td>
+                    <td>{{ n.monthlyfuel }}</td>
+                    <td>{{ n.carmaintenance }}</td>
+                    <td>{{ n.totalcost }}</td>
+                    <td>{{ n.date }}</td>
+                    <td><a href="{%url 'matel:updatepersonalexpense' n.id%}">
+                        <span class="fa fa-edit" style="color: orange; font-size: large;"></span>
+                    </a>&nbsp;</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No results found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

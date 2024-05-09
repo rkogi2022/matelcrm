@@ -1,0 +1,158 @@
+{% load custom_tags %}
+{% load static %}
+{% load tz %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+
+    <title>Sales Agreement</title>
+    <style>
+        .my-table td{
+            width: 100%;
+            font-size: 12px;
+            line-height: 1.2;
+            padding: 3px;
+            text-align: left;
+            border: 1px solid #000;
+        }
+        .print-letterhead{
+            width: 100%; 
+            max-width: 800px; 
+            display: block; 
+            margin-top: 1px;
+            margin: 0 auto; 
+            border-bottom: 1px solid #333;
+            line-height: 0;
+        }
+        .left-aligned-text {
+            text-align: right;
+        }
+        .stamp{
+            width: 100px; /* Adjust width as needed */
+            height: auto; /* Maintain aspect ratio */
+            border: 1px solid #ff9900; /* Orange border */
+            border-radius: 10px; /* Rounded corners */
+            padding: 3px; /* Padding around the stamp */
+            background-color: #fff; /* White background */
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Shadow effect */
+        }
+
+    </style>
+  </head>
+  <body>
+    <div class="row">
+        <div class="row">
+            <header>
+                <img src="{{ image_path }}" alt="Letterhead" class="print-letterhead">
+            </header>        
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="row">
+                <table style="margin-top: 8px;">
+                    <tr>
+                        <td>
+                            {% for n in clientdetails %}
+                            <b>Invoice No:</b>00000{{ n.id}}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <b> Date: </b>{% now "Y-m-d" %}
+                        </td>
+                    </tr>
+                </table>
+            </div>            
+            <h2 style="text-decoration: underline; text-align: center;">
+            AGREEMENT OF SALE OF A MOTOR VEHICLE
+            </h2>
+            {% for n in clientdetails %}
+            <div class="row">
+                <p>This Agreement is made on this date {% now "Y-m-d" %}, between MATEL TRADING COMPANY (K) LIMITED, Nairobi and {{n.name.name|capfirst}} of purchaser ID No {{n.name.idno}}, Tel No 0{{n.name.phoneno}}, P.O.Box {{n.name.pobox}}
+                </p>
+            </div>
+            {% endfor %}
+            <h5 style="text-decoration: underline;">VEHICLE DETAILS</h5>
+            <table>
+                {% for n in clientdetails %}
+                <tr>
+                    <td>1. Make - {{n.cardetails.name.make}}</td>
+                    <td>4. Chasis No - {{n.cardetails.chassisno}}</td>
+                </tr>
+                <tr>
+                    <td>2. Model - {{n.cardetails.name.name}}</td>
+                    <td>5. Colour - {{n.cardetails.color}}</td>
+                </tr>
+                <tr>
+                    <td>3. Registration - {{n.regno }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <div class="row">
+                <p>The vendor desires of disposing the above mentioned vehicle by the way of sale and has agreed to sell and the purchaser has agreed to buy the said motor vehicle.</p>
+                <h4>Now this agreement witnesses as follows:</h4>
+                <ol>
+                    <li>The said vehicle is being sold in "as is" condition and the vendor gives no warranty whatsoever.</li>
+                    {% for n in clientdetails %}
+                    <li>The purchase price is the sum of KSHS. in words, <b>{{ n.ttlamt|amount_to_words }} (Kshs.{{n.ttlamt}})</b>
+                        only.
+                    </li>
+                    {% endfor %}
+                    <li>The vendor shall provide the purchaser the following  document in respect to the said motor vehicle upon payment, <br>
+                        A. The vendor to provide the original logbook after full payment and transfer on TIMS Account.</li>
+                    <li>The vendor warrants that all the relevant Government taxes and payables on vehicle have been paid.</li>
+                    <li>The purchaser hereby undertakes to indemnify the vendor against any claims, cost or proceedings that may be brought up any person in respect of the said motor vehicle, after the date of this agreement.</li> 
+                    <li> The Deposit paid by the buyer shall not be refundable.</li>   
+                </ol> <br>
+                <p>In witness WHEREOF the two parties have set their hands the day and year  first before written.</p>
+            </div> 
+            <table>
+                <tr style="margin-bottom: 15px;">
+                    {% for n in clientdetails %}
+                    <td>Signed By Vendor: <img src="{{ image }}" alt="stamp" class="stamp"></td>
+                    {% endfor %}
+                    <td>ID No: ...933193...</td>
+                    <td>Date:...{% now "Y-m-d" %}...</td>
+                </tr>
+                <tr style="margin-bottom: 15px;">
+                    <td>Witness: ..........................................</td>
+                    <td>ID No: .........................</td>
+                    <td>Date: .........................</td>
+                </tr>
+            </table> <br> <br>
+            <table>
+                <tr style="margin-bottom: 15px;">
+                    <td>Signed by Purchaser: .......................................</td>
+                    <td>ID NO: .........................</td>
+                    <td>Date: .........................</td>
+                </tr>
+            </table> <br> <br>
+            <table>
+                <tr style="margin-bottom: 15px;">
+                    <td>Witness: .........................................</td>
+                    <td>ID No: ..........................</td>
+                    <td>Date: .........................</td>
+                </tr>
+            </table>
+            
+    </div>
+</div>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>

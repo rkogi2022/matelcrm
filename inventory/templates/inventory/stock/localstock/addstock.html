@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add Stock
+{% endblock %}
+
+{% block content %}
+
+<form method = 'POST' enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+       <div class="col-md-2"></div>
+       <div class="col-md-8">
+        <div class="card modelcard">
+          <center><h4>Add Stock</h4></center>
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item" style="margin-bottom: 10px;"><b>Car Details</b> {{form.name}}</li>
+              <li class="list-group-item" style="margin-bottom: 10px;"><b>Colour</b> {{ form.color }}</li>
+              <li class="list-group-item" style="margin-bottom: 10px;"><b>Year</b> {{ form.year  }}</li>
+              <li class="list-group-item" style="margin-bottom: 10px;"><b>Chassis No</b> {{ form.chassisno }}</li>
+              <li class="list-group-item" style="margin-bottom: 10px;"><b>Arrival Date</b> {{ form.arrivaldate }}</li>
+              <li class="list-group-item" style="margin-bottom: 10px;"><b>Status</b> {{ form.status }}</li>
+            </ul>
+          <div class="row">
+            <div class="col-md-5"><a class="button button-cancel"href="{% url 'inventory:stock' %}">Cancel</a></div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5"><button type="submit" class="button button-add"href="{% url 'inventory:stock' %}">Add</button></div>
+          </div>
+        </div>
+       </div>
+       <div class="col-md-2"></div>
+    </div>
+  </form>
+
+
+{% endblock %}

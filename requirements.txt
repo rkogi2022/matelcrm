@@ -1,0 +1,5 @@
+Django~=3.2.10
+pip install django-import-export
+pip install django-crispy-forms
+pip install xhtml2pdf
+pip install num2words

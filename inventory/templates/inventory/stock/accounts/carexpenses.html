@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Car Expenses
+{% endblock %}
+
+{% block content %}
+<div class="row" style="margin-bottom: 1rem;">
+    <div class="col-md-2">
+        <div class="row" style="margin-top:0.35em;">
+            <a href="{% url 'inventory:addexpense' %}">
+                <button type="submit" class="btn btn-primary" >+ Expenses</button>
+            </a>
+        </p>
+    </div>
+    </div>
+    <div class="col-md-6">
+    </div>
+        <div class="col-md-4">
+            <form class="d-flex" action="{% url 'inventory:searchcarexpenses' %}" method="GET">
+                <input class="form-control me-2" name="searched" type="search" placeholder="Chassis No.." aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+        </div>
+
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Chassis No</th>
+                          <th scope="col">Unit Cost</th>
+                          <th scope="col">VAT</th>
+                          <th scope="col">Port Charges</th>
+                          <th scope="col">Transport Charges</th>
+                          <th scope="col">Miscellaneous Costs</th>
+                          <th scope="col">Total Amount</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for n in page.object_list %} 
+                        <tr>   
+                            <td>{{n.name|capfirst}}</td>
+                            <td>{{n.chassisno}}</td>
+                            <td>{{n.unitcost}}</td>
+                            <td>{{n.tax}}</td>
+                            <td>{{n.portcharges}}</td>
+                            <td>{{n.transportcharges}}</td>
+                            <td>{{n.miscellaneous}}</td>
+                            <td>{{n.totalcost}}</td>
+                            <td scope="row">
+                                <a href="{%url 'inventory:updatecarexpenses' n.id%}">
+                                    <span class="fa fa-edit" style="color: orange; font-size: large;"></span>
+                                </a>&nbsp;
+                                <!-- <a href="{%url 'inventory:deletecarmake' n.id%}">
+                                    <span class="fa fa-trash" style="color: red; font-size: large;"></span>
+                                </a> -->
+                            </td>
+                        </tr>
+                        {% endfor %}
+                </table>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row my-6">
+                <div class="col-md-4 offset-md-3">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                          <li class="page-item">
+                            {% if page.has_previous %}
+                            <a class="page-link" href="{% url 'inventory:carmake' %}?page={{ page.previous_page_number }}">Previous</a>
+                          </li>
+                            {% endif %}
+                            {% for num_page in page.paginator.page_range %} <br>
+                            {% if page.number == num_page %}
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link"  href="{% url 'inventory:carmake' %}?page={{num_page}}">{{ num_page }}</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item" aria-current="page">
+                                <a class="page-link"  href="{% url 'inventory:carmake' %}?page={{num_page}}">{{ num_page }}</a>
+                            </li>
+                            {% endif %} <br>
+                            {% endfor %}
+                          <li class="page-item">
+                            {% if page.has_next %}
+                            <a class="page-link" href="{% url 'inventory:carmake' %}?page={{ page.next_page_number }}">Next</a>
+                            {% endif %}
+                          </li>
+                        </ul>
+                      </nav>
+                </div>
+            </div>
+           </div>
+        </div>
+        </div>
+        </div>
+        
+    </div>
+  </div>
+
+
+{% endblock %}

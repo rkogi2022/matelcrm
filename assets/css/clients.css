@@ -1,0 +1,9 @@
+.letterhead {
+    width: 100%; /* Set the width to fill the container */
+    max-width: 800px; /* Limit the maximum width of the image */
+    display: block; /* Ensure the image behaves as a block element */
+    margin-top: 4px;
+    margin: 0 auto; /* Center the image horizontally */
+    border-bottom: 1px solid #333; /* Add a bottom border for separation */
+    /* Add additional styling as needed */
+}

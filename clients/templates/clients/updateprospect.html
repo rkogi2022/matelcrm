@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Uodate Prospect Details
+{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row" style="margin-top: 2em;">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+   <div class="card card-body">
+     <h5><center>Update Prospect Details</center></h5>
+     <hr>
+     <form method="POST">
+         {% csrf_token %}
+         {{ form|crispy }}
+         <div class="row">
+           <div class="col-md-5"><a class="button button-cancel-make"href="{% url  'clients:prospectslist' %}">Cancel</a></div>
+           <div class="col-md-2"></div>
+           <div class="col-md-5"><button type="submit" class="button button-add"href="{% url  'clients:prospectslist' %}">Update</button></div>
+         </div>
+       </div>
+     </form>
+   </div>
+  </div>
+  <div class="col-md-4"></div>
+</div>
+  {% endblock %}
+

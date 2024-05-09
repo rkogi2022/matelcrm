@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}Receipts Page{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row my-4">
+    <div class="row" style="margin-bottom: 1rem;">
+        <div class="col-md-8">
+
+        </div>
+            <div class="col-md-4">
+                <form class="d-flex" action="{% url 'inventory:searchbyinvoice' %}" method="GET">
+                    <input class="form-control me-2" name="searched" type="search" placeholder="Invoice No/Amount Paid.." aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                  </form>
+            </div>
+
+    </div>
+    <div class="col-md-4">
+        <div class="card card-body">
+            <h5><center>Create Receipt</center></h5>
+            <hr>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input class="btn btn-success btn-block" type="submit" value="Add">
+            </form>
+            
+        </div>
+    </div>
+    <div class="col-md-8">
+        <table class="table bg-white">
+            <thead class="bg-info text-white">
+                <tr>
+                    <th scope="col">Invoice No</th>
+                    <th scope="col">Invoice Amount</th>
+                    <th scope="col">Amount Paid</th>
+                    <th scope="col">Date Paid</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for n in page.object_list %}
+                <tr>
+                    <td>{{ n.invoiceno }}</td>
+                    <td>{{n.invoiceamt}}</td>
+                    <td>{{ n.amtpaid }}</td>
+                    <td>{{n.datepaid}}</td>
+                    <td><a href="{%url 'inventory:update_receipts' n.id%}">
+                        <span class="fa fa-edit" style="color: orange; font-size: large;"></span>
+                    </a>&nbsp;</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <div class="row my-6">
+            <div class="col-md-4 offset-md-3">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item">
+                        {% if page.has_previous %}
+                        <a class="page-link" href="{% url 'inventory:receiptsdetails' %}?page={{ page.previous_page_number }}">Previous</a>
+                      </li>
+                        {% endif %}
+                        {% for num_page in page.paginator.page_range %} <br>
+                        {% if page.number == num_page %}
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link"  href="{% url 'inventory:receiptsdetails' %}?page={{num_page}}">{{ num_page }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item" aria-current="page">
+                            <a class="page-link"  href="{% url 'inventory:receiptsdetails' %}?page={{num_page}}">{{ num_page }}</a>
+                        </li>
+                        {% endif %} <br>
+                        {% endfor %}
+                      <li class="page-item">
+                        {% if page.has_next %}
+                        <a class="page-link" href="{% url 'inventory:receiptsdetails' %}?page={{ page.next_page_number }}">Next</a>
+                        {% endif %}
+                      </li>
+                    </ul>
+                  </nav>
+            </div>
+        </div>
+       </div>
+</div>
+{% endblock %}

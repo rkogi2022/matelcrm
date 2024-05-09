@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}
+HomePage
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4 mt-4">
+        <div class="card" style="height: 200px;">
+            <div class="card-header bg-info text-white">
+                Believe you can and you're halfway there.
+            </div>
+            <div class="card-body">
+                <marquee behavior="" direction="">
+                    <h3 class="my-4" style="text-decoration: wavy; font-size: larger;">
+                        "Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful." - Albert Schweitzer
+                    </h3>
+                </marquee>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 mt-4">
+        <div class="card" style="height: 250px;">
+            <div class="card-header bg-info text-white" style="text-align: center;">
+                Dashboard Statistics
+            </div>
+            <div class="card" style="height: 250px;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a class="text-decoration-none text-dark" href="">
+                            <div class="mycard indexcard shadow">
+                                <div class="card-body text-center">
+                                    <h4>Local Stock {% include './icons/list-check.svg' %}</h4>
+                                    <h3>{{ local_count }}</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="text-decoration-none text-dark" href="">
+                            <div class="mycard indexcard shadow">
+                                <div class="card-body text-center">
+                                    <h4>Japan Stock {% include './icons/list-check.svg' %}</h4>
+                                    <h3>{{ japan_count }}</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="text-decoration-none text-dark" href="">
+                            <div class="mycard indexcard shadow">
+                                <div class="card-body text-center">
+                                    <h4>Leased Stock {% include './icons/list-check.svg' %}</h4>
+                                    <h3>{{ leased_count }}</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  
+{% endblock %}
