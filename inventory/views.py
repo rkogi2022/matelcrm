@@ -154,7 +154,7 @@ def delete_carmodel(request,id):
 
 def stocklist(request):
     template='inventory/stock/localstock/stock.html'
-    stocklist=Stock.objects.all().order_by('-id')
+    stocklist=Stock.objects.all().order_by('-year') 
     page=Paginator(stocklist,10)
     page_list=request.GET.get('page')
     page = page.get_page(page_list)

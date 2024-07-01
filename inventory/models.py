@@ -73,7 +73,7 @@ class CarExpenses(models.Model):
 
     # function to calculate the total amount
     def save(self, *args, **kwargs):
-        self.totalcost=(int(self.tax) + int(self.portcharges) + int(self.portcharges) + int(self.transportcharges) + int(self.miscellaneous))
+        self.totalcost=(int(self.unitcost) + int(self.tax) + int(self.portcharges) + int(self.transportcharges) + int(self.miscellaneous))
         return super().save(*args, **kwargs)
 
     def __str__(self):

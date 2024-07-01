@@ -108,7 +108,7 @@ class UpdateJapanStockForm(forms.ModelForm):
     
 class ReceiptForm(forms.ModelForm):
     invoiceno=forms.CharField(label='Invoice No',widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
-    invoiceamt=forms.CharField(label='Invoice Amount',widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
+    invoiceamt=forms.CharField(label='Invoice Amount(USD)',widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
     amtpaid=forms.CharField(label='Amount Paid',widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
     datepaid=forms.DateTimeField(label='Payment Date',widget=DateInput)
     class Meta:
@@ -117,7 +117,7 @@ class ReceiptForm(forms.ModelForm):
 
 class UpdateReceiptForm(forms.ModelForm):
     invoiceno=forms.CharField(label='Invoice No',widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
-    invoiceamt=forms.CharField(label='Invoice Amount',widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
+    invoiceamt=forms.CharField(label='Invoice Amount(USD)',widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
     amtpaid=forms.CharField(label='Amount Paid',widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
     datepaid=forms.DateTimeField(label='Payment Date',widget=DateInput)
     class Meta:
@@ -126,7 +126,7 @@ class UpdateReceiptForm(forms.ModelForm):
 
 class CarExpensesForm(forms.ModelForm):
     chassisno=forms.CharField(label='Chassis No',widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
-    unitcost=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
+    unitcost=forms.IntegerField(label='Unit Cost(Kshs)',widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
     tax=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
     portcharges=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
     transportcharges=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
@@ -140,7 +140,7 @@ class CarExpensesForm(forms.ModelForm):
 
 class UpdateCarExpensesForm(forms.ModelForm):
     chassisno=forms.CharField(label='Chassis No',widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
-    unitcost=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
+    unitcost=forms.IntegerField(label='Unit Cost(Kshs)',widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
     tax=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
     portcharges=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
     transportcharges=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
