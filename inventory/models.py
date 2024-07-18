@@ -28,7 +28,7 @@ class Stock(models.Model):
     name = models.ForeignKey(CarModel, on_delete=models.CASCADE)
     color=models.CharField(max_length=50)
     year = models.PositiveIntegerField(default=None)
-    chassisno=models.CharField(max_length=50)
+    chassisno=models.CharField(max_length=50,  default='0001')
     arrivaldate=models.DateField(default=timezone.now)
     status=models.CharField(max_length=20,choices=status, default='AVAILABLE')
 
@@ -63,8 +63,7 @@ class Receipts(models.Model):
     
 class CarExpenses(models.Model):
     totalcost=models.PositiveIntegerField(default='0')
-    name = models.ForeignKey(CarModel, on_delete=models.CASCADE)
-    chassisno=models.CharField(max_length=50, default='0001')
+    name = models.ForeignKey(Stock, on_delete=models.CASCADE)
     unitcost = models.PositiveIntegerField(default='0')
     tax=models.PositiveIntegerField(default='0')
     portcharges=models.PositiveIntegerField(default='0')

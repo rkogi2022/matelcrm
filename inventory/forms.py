@@ -125,7 +125,6 @@ class UpdateReceiptForm(forms.ModelForm):
         fields=('__all__')
 
 class CarExpensesForm(forms.ModelForm):
-    chassisno=forms.CharField(label='Chassis No',widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
     unitcost=forms.IntegerField(label='Unit Cost(Kshs)',widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
     tax=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
     portcharges=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
@@ -133,7 +132,7 @@ class CarExpensesForm(forms.ModelForm):
     miscellaneous=forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}),required=True)
     class Meta:
         model = CarExpenses
-        fields=('name','chassisno','unitcost','tax','portcharges','transportcharges','miscellaneous')
+        fields=('name','unitcost','tax','portcharges','transportcharges','miscellaneous')
         widgets = {
             'name': forms.Select(attrs={'class': 'form-control','rows': 1}),
         }

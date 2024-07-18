@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Business Page{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+<div class="col-md-12" style="margin-top: 10px;">
+    <table class="table bg-white">
+        <thead class="bg-info text-white">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Chassis No</th>
+                <th scope="col">Year</th>
+                <th scope="col">Colour</th>
+                <th scope="col">Unit Cost</th>
+                <th scope="col">Amount Sold</th>
+                <th scope="col">Profit/Loss</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in reports %}
+            <tr>
+                <td>{{ report.business.cardetails.name.name|capfirst }}</td>
+                <td>{{ report.business.cardetails.name.chassisno|capfirst }}</td>
+                <td>{{ report.business.cardetails.name.year|capfirst }}</td>
+                <td>{{ report.business.cardetails.name.color|capfirst }}</td>
+                <td>{{ report.total_cost }}</td>
+                <td>{{ report.ttl_amount }}</td>
+                <td class="{% if report.profit_loss > 0 %}text-success{% elif report.profit_loss < 0 %}text-danger{% else %}text-dark{% endif %}">
+                    {{ report.profit_loss }}
+                </td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="container">
+    <div class="row my-6">
+        <div class="col-md-4 offset-md-3">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if page.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page.previous_page_number }}">Previous</a>
+                    </li>
+                    {% endif %}
+                    {% for num_page in page.paginator.page_range %}
+                    {% if page.number == num_page %}
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">{{ num_page }}</span>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num_page }}">{{ num_page }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if page.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page.next_page_number }}">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+{% endblock %}

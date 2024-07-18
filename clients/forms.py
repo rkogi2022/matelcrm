@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import Prospects
-from inventory.models import Stock
+from inventory.models import CarExpenses
 from .models import Business
 from .models import Receipt
 
@@ -34,7 +34,7 @@ class BusinessForm(forms.ModelForm):
     regno = forms.CharField(label='Registration No', widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}), required=True)
     engine = forms.CharField(label='Engine Capacity', widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}), required=True)
     invamt = forms.CharField(label='Invoice Amount', widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}), required=True)
-    cardetails = forms.ModelChoiceField(queryset=Stock.objects.filter(status__icontains='available'))
+    cardetails = forms.ModelChoiceField(queryset=CarExpenses.objects.all())
 
     class Meta:
         model = Business
@@ -50,7 +50,7 @@ class UpdateBusinessForm(forms.ModelForm):
     regno = forms.CharField(label='Registration No', widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}), required=True)
     engine = forms.CharField(label='Engine Capacity', widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}), required=True)
     invamt = forms.CharField(label='Invoice Amount', widget=forms.TextInput(attrs={'class': 'form-control', 'rows': 1}), required=True)
-    cardetails = forms.ModelChoiceField(queryset=Stock.objects.filter(status__icontains='available'))
+    cardetails = forms.ModelChoiceField(queryset=CarExpenses.objects.all())
 
     class Meta:
         model = Business

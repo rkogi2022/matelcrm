@@ -47,7 +47,7 @@ Car Expenses
                         {% for n in page.object_list %} 
                         <tr>   
                             <td>{{n.name|capfirst}}</td>
-                            <td>{{n.chassisno}}</td>
+                            <td>{{n.name.chassisno}}</td>
                             <td>{{n.unitcost}}</td>
                             <td>{{n.tax}}</td>
                             <td>{{n.portcharges}}</td>

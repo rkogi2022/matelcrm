@@ -8,6 +8,13 @@ from django.template.loader import get_template
 from django.templatetags.static import static
 from xhtml2pdf import pisa
 
+import calendar
+from collections import defaultdict
+from datetime import datetime
+
+from django.utils.dateparse import parse_datetime
+
+
 from .models import Prospects
 from .models import Business
 from .models import Receipt
@@ -285,4 +292,87 @@ def transactional_report(request):
     context = {
         'page': page,
     }
+    return render(request, template, context)
+
+#income report
+def income_report(request):
+    template= 'clients/receipts/income_report.html'
+    income = Business.objects.all().order_by('-id')
+    page = Paginator(income, 10)
+    page_list = request.GET.get('page')
+    page = page.get_page(page_list)
+
+    reports = []
+    for business in page.object_list:
+        total_cost = business.cardetails.totalcost
+        ttl_amount = business.ttlamt
+        profit_loss = ttl_amount - total_cost
+        reports.append({
+            'business': business,
+            'total_cost': total_cost,
+            'ttl_amount': ttl_amount,
+            'profit_loss': profit_loss,
+        })
+
+    context = {
+        'page': page,
+        'reports': reports,
+    }
+    return render(request, template, context)
+
+#monthly data report
+def monthly_report(request):
+    template = 'clients/receipts/monthly_report.html'
+    
+     # Aggregate data
+    businesses = Business.objects.all()
+    monthly_data = defaultdict(lambda: {'profit': 0, 'loss': 0})
+    yearly_data = defaultdict(lambda: {'total_profit': 0, 'total_loss': 0, 'total_cost': 0, 'ttlamt': 0, 'profit_loss_diff': 0, 'color': ''})  # Include ttlamt here
+
+    for business in businesses:
+        month_year = business.created_at.strftime('%Y-%m')
+        year = business.created_at.strftime('%Y')
+        total_cost = business.cardetails.totalcost
+        ttl_amount = business.ttlamt
+        profit_loss = ttl_amount - total_cost
+        
+        if profit_loss > 0:
+            monthly_data[month_year]['profit'] += profit_loss
+            yearly_data[year]['total_profit'] += profit_loss
+        else:
+            monthly_data[month_year]['loss'] += abs(profit_loss)
+            yearly_data[year]['total_loss'] += abs(profit_loss)
+        
+        yearly_data[year]['total_cost'] += total_cost
+        yearly_data[year]['ttlamt'] += ttl_amount  # Accumulate ttlamt for the year
+
+    # Get all months of the current year
+    current_year = datetime.now().year
+    months = [f'{current_year}-{str(i).zfill(2)}' for i in range(1, 13)]
+
+    profits = [monthly_data[month]['profit'] for month in months]
+    losses = [monthly_data[month]['loss'] for month in months]
+
+
+    # Calculate profit/loss difference and determine color
+    for year, data in yearly_data.items():
+        profit_loss_diff = data['ttlamt'] - data['total_cost']
+        yearly_data[year]['profit_loss_diff'] = profit_loss_diff
+        if profit_loss_diff > 0:
+            yearly_data[year]['color'] = 'text-success'  # Green
+        elif profit_loss_diff < 0:
+            yearly_data[year]['color'] = 'text-danger'  # Red
+        else:
+            yearly_data[year]['color'] = 'text-dark'  # Black (even)
+    # Prepare yearly data for table
+    years = sorted(yearly_data.keys())
+    year_totals = [{'year': year, 'total_cost': yearly_data[year]['total_cost'], 'ttlamt': yearly_data[year]['ttlamt'], 'profit_loss_diff': yearly_data[year]['profit_loss_diff'], 'color': yearly_data[year]['color']} for year in years]
+
+    context = {
+        'months': months,
+        'profits': profits,
+        'losses': losses,
+        'year_totals': year_totals,
+    }
+    
     return render(request, template, context)

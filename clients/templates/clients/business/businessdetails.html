@@ -45,10 +45,10 @@
                 <tr>
                     <td> {{ n.name.name|capfirst }} </td>
                     <td>
-                        <p>Car: {{n.cardetails.name|capfirst}}</p>
-                        <p>Chasis No: {{ n.cardetails.chassisno|capfirst }} </p>
-                        <p>Year: {{ n.cardetails.year|capfirst }}</p>
-                        <p>Color: {{ n.cardetails.color|capfirst }} </p>
+                        <p>Car: {{n.cardetails.name.name|capfirst}}</p>
+                        <p>Chasis No: {{ n.cardetails.name.chassisno|capfirst }} </p>
+                        <p>Year: {{ n.cardetails.name.year|capfirst }}</p>
+                        <p>Color: {{ n.cardetails.name.color|capfirst }} </p>
                     </td>
                     <td>
                         <p>Engine: {{n.engine}}</p>

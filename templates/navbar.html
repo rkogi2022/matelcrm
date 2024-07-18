@@ -26,10 +26,11 @@
               BUSINESS
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="{% url 'clients:receiptslist' %}">RECEIPTS </a></li>
-              <li><a class="dropdown-item" href="{% url 'clients:businesslist' %}">BUSINESS</a></li>
               <li><a class="dropdown-item" href="{% url 'clients:prospectslist' %}">CLIENTS RECORDS</a></li>
-              <li><a class="dropdown-item" href="{% url 'clients:transactionalreport' %}">REPORTS</a></li>
+              <li><a class="dropdown-item" href="{% url 'clients:businesslist' %}">BUSINESS TRANSACTIONS</a></li>
+              <li><a class="dropdown-item" href="{% url 'clients:receiptslist' %}">TRANSACTION RECEIPTS </a></li>
+              <li><a class="dropdown-item" href="{% url 'clients:transactionalreport' %}">FINANCIAL REPORTS</a></li>
+              <li><a class="dropdown-item" href="{% url 'clients:income_report' %}">INCOME REPORTS</a></li>
             </ul>
           </li>
 
@@ -42,6 +43,7 @@
               <li><a class="dropdown-item" href="{% url 'inventory:receiptsdetails' %}">JAPAN RECEIPTS</a></li>
               <li><a class="dropdown-item" href="{% url 'matel:officeexpenseslist' %}">OFFICE EXPENSES</a></li>
               <li><a class="dropdown-item" href="{% url 'matel:personalexpenseslist' %}">PERSONAL EXPENSES</a></li>
+              <li><a class="dropdown-item" href="{% url 'clients:monthly_report' %}">MONTHLY REPORTS</li>
             </ul>
           </li>
 

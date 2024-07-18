@@ -22,4 +22,6 @@ urlpatterns = [
     path('addreceipt/', views.add_receipt, name='addreceipt'),
     path('updatereceipt/<int:id>/', views.update_receipt, name='updatereceipt'),
     path('transactionalreport/', views.transactional_report, name='transactionalreport'),
+    path('income_report', views.income_report, name='income_report'),
+    path('monthly-report/', views.monthly_report, name='monthly_report'),
 ]

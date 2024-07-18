@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
-from inventory.models import Stock
+from django.utils.timezone import now
+from inventory.models import CarExpenses
 
 # Create your models here.
 class Prospects(models.Model):
@@ -24,7 +25,7 @@ class Business(models.Model):
         ('DIESEL ', 'Diesel'),
     ]
     name=models.ForeignKey(Prospects,null=True, on_delete=models.CASCADE)
-    cardetails=models.ForeignKey(Stock,null=True, on_delete=models.CASCADE)
+    cardetails=models.ForeignKey(CarExpenses,null=True, on_delete=models.CASCADE)
     regno= models.CharField(max_length=150)
     engine= models.CharField(max_length=150,default='1190CC')
     fuel= models.CharField(max_length=20,choices=fueltype, default='Petrol')
@@ -32,6 +33,8 @@ class Business(models.Model):
     quantity= models.PositiveIntegerField(default=1)
     invamt=models.PositiveIntegerField(default=0)
     ttlamt=models.PositiveIntegerField(default=0)
+    created_at = models.DateField(default=timezone.now)
+
 
      # function to calculate the total amount
     def save(self, *args, **kwargs):
